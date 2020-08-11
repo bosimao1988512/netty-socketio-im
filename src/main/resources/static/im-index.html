@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Demo Chat</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"/>
+    <link href="bootstrap.css" rel="stylesheet">
+
+    <style>
+        body {
+            padding: 20px;
+        }
+
+        #console {
+            height: 400px;
+            overflow: auto;
+        }
+
+        .username-msg {
+            color: orange;
+        }
+
+        .connect-msg {
+            color: green;
+        }
+
+        .disconnect-msg {
+            color: red;
+        }
+
+        .send-msg {
+            color: #888
+        }
+
+        #form {
+            text-align: right;
+        }
+    </style>
+
+    <script src="js/socket.io/socket.io.js"></script>
+    <script src="js/moment.min.js"></script>
+    <script src="js/jquery-1.7.2.min.js"></script>
+
+    <script>
+        let host= window.location.host;
+        let url='http://'+host.substring(0,host.indexOf(':'))+':8090?TOKEN=lingzi';
+        const socket = io.connect(url);
+        socket.pingIntervalTimer=30000;
+        socket.pingTimeoutTimer=10000;
+        // socket = io.connect('ws://103.31.201.1', {transports: ['websocket', 'xhr-polling', 'jsonp-polling']})
+
+        //socket.on('connection', function (){};
+        socket.on('connect', function () {
+            output('<span class="connect-msg">Client has connected to the server!</span>');
+        });
+
+        socket.on('Chat', function (data, ackServerCallback) {
+            if (data !== "" && data !== "[]" && data !== "{}") {
+                let dataObj = JSON.parse(data);
+                if (dataObj instanceof Array) {
+                    //if (dataObj.length>0)
+                    dataObj.forEach((item, index) => {
+                        output('<span class="username-msg">' + moment(item.time).format("YYYY-MM-dd hh:mm:ss") + "  " + item.source +
+                            ':</span> ' + item.content);
+                    })
+                } else if (dataObj instanceof Object) {
+                    //if (dataObj != {})
+                    output('<span class="username-msg">' + moment(dataObj.time).format("YYYY-MM-dd hh:mm:ss") + "  " + dataObj.source +
+                        ':</span> ' + dataObj.content);
+                }
+            }
+
+            if (ackServerCallback) {
+                // send ack data to server
+                ackServerCallback('Done');
+            }
+        });
+
+        socket.on('disconnect', function () {
+            output('<span class="disconnect-msg">The client has disconnected!</span>');
+        });
+
+        function sendDisconnect() {
+            socket.disconnect();
+        }
+
+        function sendMessage() {
+            let message = $('#msg').val();
+            let target = $('#target').val();
+            $('#msg').val('');
+
+            let jsonObject = {
+                source: 'lingzi',
+                target: target,
+                content: message
+            };
+
+            socket.emit('Chat', JSON.stringify(jsonObject), function (ack) {
+                alert("ack from server! arg1: " + ack);
+            });
+        }
+
+        function output(message) {
+            //let currentTime = "<span class='time'>" + moment().format(' HH:mm:ss') + "</span>";
+            //let element = $("<div>" + currentTime + " " + message + "</div>");
+            let element = $("<div>" + message + "</div>");
+            $('#console').prepend(element);
+        }
+
+        $(document).keydown(function (e) {
+            if (e.keyCode == 13) {
+                $('#send').click();
+            }
+        });
+
+    </script>
+
+</head>
+
+<body>
+<h1>socketio Demo Chat</h1>
+<br/>
+<div id="console" class="well">
+</div>
+
+<div id="form">
+    <form class="well form-inline" onsubmit="return false;">
+        <input id="msg" class="input-xlarge" type="text" placeholder="Type something..."/>
+        <input id="target" class="input-xlarge" type="text" placeholder="to ..."/>
+        <button type="button" onClick="sendMessage()" class="btn" id="send">Send</button>
+        <button type="button" onClick="sendDisconnect()" class="btn">Disconnect</button>
+    </form>
+</div>
+
+</body>
+
+</html>

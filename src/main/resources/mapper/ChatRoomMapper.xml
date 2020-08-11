@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dcjt.dcjtim.repository.ChatRoomMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.dcjt.dcjtim.entity.ChatRoom">
+        <id column="id" property="id" />
+        <result column="source" property="source" />
+        <result column="target" property="target" />
+        <result column="msg_type" property="msgType" />
+        <result column="content" property="content" />
+        <result column="material_name" property="materialName" />
+        <result column="material_id" property="materialId" />
+        <result column="time" property="time" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, source, target, msg_type, content, material_name, material_id, time
+    </sql>
+
+</mapper>
