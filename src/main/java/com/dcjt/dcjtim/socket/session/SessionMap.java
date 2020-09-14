@@ -21,7 +21,7 @@ public class SessionMap {
     /**
      * 用户通道
      */
-    private ConcurrentHashMap<String, Set<SocketIOClient>> sessions = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, Set<SocketIOClient>> sessions = new ConcurrentHashMap<>();
 
     private static class SingleInstance {
         private static SessionMap singleInstance = new SessionMap();
