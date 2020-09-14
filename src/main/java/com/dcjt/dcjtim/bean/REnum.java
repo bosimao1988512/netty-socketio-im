@@ -1,7 +1,7 @@
 package com.dcjt.dcjtim.bean;
 
 /**
- * @author 唐文滔 on 2020年7月17日
+ * @author 滔哥 on 2020年7月17日
  *
  */
 public enum REnum {
