@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * socket服务
- * Created by 唐文滔 on 2020/6/3
+ * Created by 滔哥 on 2020/6/3
  */
 @Slf4j
 @Component
