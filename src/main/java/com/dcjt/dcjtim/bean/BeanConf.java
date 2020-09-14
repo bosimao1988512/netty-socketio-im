@@ -33,7 +33,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * 配置bean
- * Created by 唐文滔 on 2020/6/4
+ * Created by 滔哥 on 2020/6/4
  */
 @Configuration
 @PropertySource(value = {"classpath:applicationDynamic.properties"})
