@@ -1,7 +1,7 @@
 package com.dcjt.dcjtim.bean;
 
 /**
- * Created by 唐文滔 on 2020/6/2
+ * Created by 滔哥 on 2020/6/2
  */
 public enum MsgType {
     /**
