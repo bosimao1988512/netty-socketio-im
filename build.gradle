@@ -38,7 +38,6 @@ dependencies {
     //annotationProcessor 'org.projectlombok:lombok:1.18.12'
     implementation  'org.projectlombok:lombok:1.18.12'
 
-    compile group: 'com.baomidou', name: 'mybatis-plus-generator', version: "$mybatisplusversion"
     compile group: 'com.baomidou', name: 'mybatis-plus-boot-starter', version: "$rootProject.mybatisplusversion"
     compile group: 'org.redisson', name: 'redisson', version: '3.13.1'
     compile group: 'com.corundumstudio.socketio', name: 'netty-socketio', version: '1.7.18'
